@@ -1,4 +1,5 @@
 import sys, os, yaml, fontforge
+
 font_dir = sys.argv[1].rstrip('/')
 meta = yaml.safe_load(open(f"{font_dir}/metadata.yml"))
 sys.path.insert(0, font_dir)
@@ -12,8 +13,9 @@ font.em = config.UPM
 font.ascent = config.ASCENDER
 font.descent = abs(config.DESCENDER)
 
-glyphs.build(font, config) # ←ここでstrokeする
+glyphs.build(font, config)
 
 os.makedirs('dist', exist_ok=True)
-font.generate(f"dist/{meta['output']}")
-print(f"✅ {meta['output']}")
+out = f"dist/{meta['output']}"
+font.generate(out)
+print(f"✅ {out}")
