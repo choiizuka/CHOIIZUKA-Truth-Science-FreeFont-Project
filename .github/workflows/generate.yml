@@ -2,9 +2,7 @@ name: Build glyphs
 on:
   workflow_dispatch:
   push:
-    paths:
-      - 'imagefonts/**'
-      - 'generate.py'
+    paths: ['imagefonts/**']
 
 jobs:
   build:
@@ -12,13 +10,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - run: pip install pillow pyyaml
-      - run: python generate.py
+        with: { python-version: '3.11' }
+      - run: pip install pillow
+      - name: Run all font generators
+        run: |
+          for f in $(find imagefonts -name generate.py); do
+            echo ">> $f"
+            python "$f"
+          done
       - run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add imagefonts/**/output
-          git commit -m "auto generate fonts" || echo "no changes"
+          git commit -m "auto build fonts" || echo "no changes"
           git push
