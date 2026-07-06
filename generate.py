@@ -1,4 +1,5 @@
 # フォント画像ジェネレーター
+# 2026.7.7
 import os
 from pathlib import Path
 import yaml
