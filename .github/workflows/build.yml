@@ -2,29 +2,12 @@
 - name: Build
   run: |
     fontforge -lang=py -c "
-import glob, fontforge
-
-mplus = glob.glob('**/mplus*.ttf', recursive=True)[0]
-noto = glob.glob('Noto_Sans_JP/*', recursive=True)[0]
-tr = glob.glob('**/TRSans*.ttf', recursive=True)[0]
-
-print('✅ Found:', tr, mplus, noto)
-
-# ① TRSansを土台にする（英数はこれが残る）
-font = fontforge.open(tr)
-
-# ② 日本語を足す
-font.mergeFonts(mplus)
-font.mergeFonts(noto)
-
-# ③ 名前を書き換える ←ここがポイント！
-font.fontname = "TruthScience-MPlus"
-font.familyname = "Truth Science MPlus"
-font.fullname = "Truth Science MPlus Regular"
-font.version = "1.001"
-font.copyright = "Built by choiizuka on GitHub Actions"
-
-# ④ 出力
-font.generate('dist/Truth-Science-MPlus.ttf')
-print('🎉 名前変更＆英数優先で完成！')
-"
+    import glob, fontforge
+    mplus = glob.glob('**/mplus*.ttf', recursive=True)[0]
+    noto = glob.glob('Noto_Sans_JP/*.*', recursive=True)[0]
+    tr = glob.glob('**/TRSans*.ttf', recursive=True)[0]
+    print('Found:', mplus, noto, tr)
+    jp = fontforge.open(mplus)
+    jp.mergeFonts(tr)
+    jp.generate('Truth-Science-MPlus.ttf')
+    "
