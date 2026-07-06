@@ -3,6 +3,444 @@ CHOIIZUKA-Truth-Science-FreeFont-Project
 
 👑🍸💕
 
+# TR Font 作成計画書
+## Truth-Science Font Development Plan
+
+Version: Prototype v0.1
+
+---
+
+# はじめに
+
+このドキュメントは、Truth-Science Font（以下 TR Font）の開発方針をAIチーム全体で共有するための計画書です。
+
+本プロジェクトは、単にフォントを作成することではなく、
+
+**「設計書から再現可能なフォント開発システム」を構築すること**
+
+を最終目標としています。
+
+しかし、その前段階として現在はプロトタイピングを優先し、短期間で実際に使用可能な試作フォントを完成させることを目指します。
+
+---
+
+# 現在の開発フェーズ
+
+現在は
+
+## Prototype Phase（試作開発）
+
+です。
+
+目的は
+
+**「TR Fontの世界観を最短で形にすること」**
+
+になります。
+
+この段階では
+
+- 完璧な設計
+- 完璧なコード
+- 完璧なフォント品質
+
+は目標ではありません。
+
+まずは
+
+**実際に使用できる試作版TR Font**
+
+を完成させることを最優先とします。
+
+---
+
+# Prototypeの目的
+
+現在の目的は以下の通りです。
+
+- TR Fontのブランドイメージを可視化する
+- Pythonによるフォント生成の流れを確立する
+- 実際にインストール可能なTTFを生成する
+- GitHub Actionsとの連携を確認する
+- 今後の正式版開発の土台を作る
+
+---
+
+# Prototypeで対応する範囲
+
+対象文字
+
+```
+A-Z
+
+a-z
+
+0-9
+```
+
+記号
+
+```
+.
+
+,
+
+%
+
+@
+
+#
+
++
+
+-
+
+=
+
+()
+
+[]
+```
+
+ギリシャ文字（最低限）
+
+```
+Σ
+
+Δ
+
+π
+
+λ
+
+μ
+
+Ω
+```
+
+これらを中心に試作を行います。
+
+---
+
+# Prototype開発方針
+
+最優先事項
+
+```
+実際に使えるTTFを生成すること
+```
+
+この段階では
+
+- Geometry Engine
+- Variable Font
+- OpenType高度機能
+
+などは実装対象外とします。
+
+必要最低限の品質で問題ありません。
+
+---
+
+# AIチーム役割分担
+
+## プロジェクトオーナー
+
+👑
+
+担当
+
+・仕様決定
+
+・設計レビュー
+
+・GitHub管理
+
+・README管理
+
+・最終判断
+
+---
+
+## ChatGPT
+
+担当
+
+・設計書作成
+
+・フォント理論
+
+・描画仕様
+
+・Python設計
+
+・README
+
+・ドキュメント整備
+
+・アーキテクチャ設計
+
+---
+
+## Claude
+
+担当
+
+・Python実装
+
+・フォント生成
+
+・TTF生成
+
+・ライブラリ検証
+
+・GitHub Actions実装
+
+・デバッグ
+
+---
+
+## その他AI
+
+担当
+
+・レビュー
+
+・表示確認
+
+・改善提案
+
+---
+
+# 今後の正式開発
+
+Prototype完成後、
+
+正式なTR Font開発を開始します。
+
+---
+
+# 正式版の目的
+
+正式版では
+
+**「設計書から完全再生成できるフォントシステム」**
+
+を構築します。
+
+ここで初めて
+
+- Geometry Engine
+- Drawing Engine
+- Glyph API
+- Variable Font
+- OpenType Feature
+- Ligature
+- 数学記号
+- ギリシャ文字完全対応
+
+などを段階的に実装します。
+
+---
+
+# 正式版開発方針
+
+正式版では
+
+```
+Design Specification
+
+↓
+
+Drawing Engine
+
+↓
+
+Glyph Generator
+
+↓
+
+Outline Validation
+
+↓
+
+TTF Builder
+
+↓
+
+Truth-Science Font
+```
+
+という構造を目指します。
+
+フォントは
+
+**設計書から再生成可能**
+
+であることを基本理念とします。
+
+---
+
+# GitHub構成（予定）
+
+```
+TRFont/
+
+docs/
+
+prototype/
+
+generator/
+
+glyphs/
+
+output/
+
+.github/
+```
+
+docs
+
+↓
+
+設計書
+
+prototype
+
+↓
+
+試作品
+
+generator
+
+↓
+
+Python生成コード
+
+glyphs
+
+↓
+
+各文字仕様
+
+output
+
+↓
+
+生成フォント
+
+---
+
+# 開発優先順位
+
+現在
+
+★★★★★
+
+Prototype完成
+
+↓
+
+★★★★☆
+
+GitHub自動生成
+
+↓
+
+★★★★☆
+
+Python生成コード整理
+
+↓
+
+★★★☆☆
+
+Geometry Engine
+
+↓
+
+★★★☆☆
+
+Glyph API
+
+↓
+
+★★☆☆☆
+
+Variable Font
+
+---
+
+# 成功条件
+
+Prototype成功条件
+
+・TTF生成成功
+
+・OSへインストール可能
+
+・GitHub Actions成功
+
+・WordPressで表示可能
+
+・TRPRESSで使用可能
+
+これを満たした時点でPrototype完了とします。
+
+---
+
+# 最終目標
+
+Truth-Science Fontは
+
+単なるフォントではありません。
+
+将来的には
+
+**設計書・Python・GitHubによって管理されるオープンなフォント開発プロジェクト**
+
+として育成します。
+
+---
+
+# 開発理念
+
+Prototypeでは
+
+「完成度」より
+
+「前へ進むこと」
+
+を優先します。
+
+正式版では
+
+品質・保守性・再現性を重視します。
+
+Prototypeは
+
+正式版を完成させるための
+
+最も重要な土台です。
+
+---
+
+# Mission
+
+Prototype First.
+
+Specification Second.
+
+Architecture Forever.
+
+「まず動くものを作る。
+
+その経験を資産化し、
+
+最終的には設計書から再生成可能なTruth-Science Fontを完成させる。」
+
+---
+
 # Truth-Science Font Builder
 
 > **Python × FontForge × GitHub Actions**
