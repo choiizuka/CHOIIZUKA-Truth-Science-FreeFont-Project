@@ -1,22 +1,25 @@
-name: Build Truth-Science
-on: [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: sudo apt-get update && sudo apt-get install -y fontforge python3-fontforge
-      - run: |
-          fontforge -lang=py -c "
-          import fontforge
-          jp = fontforge.open('M_PLUS_1p/mplus-1p-regular.ttf')
-          jp.mergeFonts('output/TRSans-Regular.ttf')
-          jp.fontname='TruthScience-MPlus'
-          jp.familyname='Truth Science'
-          jp.fullname='Truth Science MPlus'
-          jp.generate('Truth-Science-MPlus.ttf')
-          "
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Truth-Science-Fonts
-          path: '*.ttf'
+import glob, fontforge
+
+mplus = glob.glob('**/mplus*.ttf', recursive=True)[0]
+noto = glob.glob('Noto_Sans_JP/*', recursive=True)[0]
+tr = glob.glob('**/TRSans*.ttf', recursive=True)[0]
+
+print('✅ Found:', tr, mplus, noto)
+
+# ① TRSansを土台にする（英数はこれが残る）
+font = fontforge.open(tr)
+
+# ② 日本語を足す
+font.mergeFonts(mplus)
+font.mergeFonts(noto)
+
+# ③ 名前を書き換える ←ここがポイント！
+font.fontname = "TruthScience-MPlus"
+font.familyname = "Truth Science MPlus"
+font.fullname = "Truth Science MPlus Regular"
+font.version = "1.001"
+font.copyright = "Built by choiizuka on GitHub Actions"
+
+# ④ 出力
+font.generate('dist/Truth-Science-MPlus.ttf')
+print('🎉 名前変更＆英数優先で完成！')
