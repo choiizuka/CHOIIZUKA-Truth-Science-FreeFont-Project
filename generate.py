@@ -1,3 +1,4 @@
+# フォント画像ジェネレーター
 import os
 from pathlib import Path
 import yaml
