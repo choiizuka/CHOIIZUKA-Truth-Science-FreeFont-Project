@@ -1,4 +1,11 @@
-import glob, fontforge
+# 抜粋：ファイル名を自動探索する版
+- name: Build
+  run: |
+    fontforge -lang=py -c 
+#
+# 以下プログラム配置
+# ↓
+"import glob, fontforge
 
 mplus = glob.glob('**/mplus*.ttf', recursive=True)[0]
 noto = glob.glob('Noto_Sans_JP/*', recursive=True)[0]
