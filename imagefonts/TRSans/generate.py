@@ -1,3 +1,4 @@
+# フォント画像ジェネレーター
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
@@ -9,7 +10,7 @@ BG = "#FFFFFF"
 FG = "#000000"
 CAP_H_RATIO = 0.85
 X_H_RATIO = 0.65
-CHARS = "0123456789Ee" # 0-9とEe
+CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&(){}<>|" # 0-9とEe
 # =============================
 
 BASE = Path(__file__).parent
