@@ -1,0 +1,33 @@
+name: Build glyphs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'config.yaml'
+      - 'generate.py'
+      - 'fonts/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: pip install pillow pyyaml
+
+      - name: Generate
+        run: python generate.py
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add output
+          git commit -m "generate TRSans glyphs" || echo "no changes"
+          git push
