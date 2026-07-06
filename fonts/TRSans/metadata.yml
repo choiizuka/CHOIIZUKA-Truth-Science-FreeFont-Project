@@ -5,3 +5,14 @@ family: Truth Science
 style: Sans
 weight: Regular
 output: TRSans-Regular.ttf
+
+charset:
+  latin_upper: true
+  latin_lower: false
+  greek_upper: true
+  greek_lower: false
+  numbers: true
+  punctuation: true
+
+author: CHOIIZUKA
+license: OFL
