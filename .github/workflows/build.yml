@@ -1,0 +1,22 @@
+name: Build Truth-Science
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y fontforge python3-fontforge
+      - run: |
+          fontforge -lang=py -c "
+          import fontforge
+          jp = fontforge.open('M_PLUS_1p/mplus-1p-regular.ttf')
+          jp.mergeFonts('output/TRSans-Regular.ttf')
+          jp.fontname='TruthScience-MPlus'
+          jp.familyname='Truth Science'
+          jp.fullname='Truth Science MPlus'
+          jp.generate('Truth-Science-MPlus.ttf')
+          "
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Truth-Science-Fonts
+          path: '*.ttf'
