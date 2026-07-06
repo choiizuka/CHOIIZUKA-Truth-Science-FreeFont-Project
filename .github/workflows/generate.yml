@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'imagefonts/**'   # ← ここを変える
+      - 'imagefonts/**'
       - 'generate.py'
 
 jobs:
