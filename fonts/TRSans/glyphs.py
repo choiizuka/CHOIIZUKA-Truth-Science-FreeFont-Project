@@ -1,4 +1,3 @@
-```python
 # fonts/TRSans/glyphs.py
 # Generated to match TRUTH-SCIENCE FONT design brief
 # Uses FontForge Python API: createChar, glyphPen, moveTo, lineTo, curveTo, closePath
@@ -1511,4 +1510,3 @@ def build(font, cfg):
                 glyph.width = GLYPH_WIDTH
         except Exception:
             pass
-```
