@@ -10,7 +10,11 @@ def expand(items):
             out += it
     return out
 
-cfg = yaml.safe_load(open("config.yaml"))
+import glob
+for cfg_path in glob.glob("imagefonts/**/config.yaml", recursive=True):
+    cfg = yaml.safe_load(open(cfg_path))
+    base = os.path.dirname(cfg_path) # ← TRSansフォルダ
+    out_dir = os.path.join(base, "output") # 各フォントごとに出力
 W, H = cfg["canvas"]
 BG, FG = cfg["background"], cfg["foreground"]
 
