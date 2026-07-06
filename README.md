@@ -441,6 +441,140 @@ Architecture Forever.
 
 ---
 
+# TR Font (Truth-Science Font) — Phase 1 プロトタイプ
+
+「宇宙の真理を追求するフォント」というコンセプトのもと、**画像やフォントエディタを使わず、
+Pythonコードだけでアウトラインを生成して実際にインストール可能なTTFを作る**プロジェクトです。
+
+## この段階でできていること
+
+- A-Z, a-z, 0-9（62文字）
+- 記号29種（. , : ; ! ? % # @ & + - = / \ ( ) [ ] { } < > " ' _ * ^ ~）
+- 科学記号12種（∞ √ ≈ ≤ ≥ ± × ÷ → ← ↑ ↓）
+- ギリシャ文字17文字（Σ Δ Θ Λ Π Φ Ω / α β γ δ λ μ π θ φ ω）
+- すべて `config.py` の数値（線幅・CapHeight・x-height等）から再生成可能
+- 実際にOSへインストールして使えるTTFファイル
+- GitHub Actionsで自動ビルド（`.github/workflows/build-font.yml`、pushや手動実行でTTF+プレビューをArtifact化）
+
+## この段階でできていないこと（正直な現状）
+
+- 各文字は「矩形バー」と「楕円リング」の組み合わせで作った**幾何学的なスケッチレベル**の字形です。
+  C, G, S, 数字の3 などの「開いた曲線」は、円を四角で断ち切る簡易的な方法で作っているため、
+  実際の書体のような滑らかな先細り(テーパー)や自然な開き方にはなっていません。
+- カーニング（文字間隔の微調整）は未対応です。
+- `CORNER_RADIUS`（角の丸め）はconfigに項目だけあり、実際の描画にはまだ反映されていません
+  （現状はすべて直角のバーです）。
+- ヒンティング（小さいサイズでの表示最適化）は行っていません。
+
+つまり「読める・打てる・インストールできる」は達成できていますが、
+「品格のある美しい書体」にはまだ距離があります。これは意図的な割り切りです
+（まず動くものを、という今回の方針に沿っています）。
+
+## ディレクトリ構成
+
+```
+TRFont/
+├── .github/workflows/
+│   └── build-font.yml   # push/手動実行でTTFを自動ビルドするGitHub Actions
+├── config.py       # 設計パラメータ（ここを変えると全文字が再生成される）
+├── primitives.py   # 図形プリミティブ（矩形バー・楕円・ブール演算合成）
+├── glyphs.py       # A-Z, a-z, 0-9, ギリシャ文字の字形定義
+├── symbols.py      # 記号・科学記号の字形定義
+├── build.py        # UFOを組み立ててTTFにコンパイル
+├── preview.py      # 生成したフォントでpreview.pngを作る
+├── output/
+│   └── TRSans-Regular.ttf
+└── preview/
+    └── preview.png
+```
+
+## 修正済みの既知バグ（重要・再発防止のため記録）
+
+**症状**: B, D, 8, 9 など「輪(穴)を持つ文字」が、穴の部分まで黒く塗りつぶされてしまう。
+
+**原因**: `build.py` の `ufo2ft.compileTTF()` に `removeOverlaps=True` を指定していたが、
+`primitives.py` の `combine()` がその時点で既にskia-pathopsによるブール演算
+（重なり除去・穴の生成）を完了させていたため、**二重に重なり除去処理がかかり**、
+本来残るべき内部の穴が外形とマージされて消えてしまっていた。
+
+**対処**: `build.py` は `removeOverlaps=False` で呼び出すこと。
+`combine()` を使わず単純な輪郭だけを描画する場合は `True` に戻して構わないが、
+このプロジェクトの `glyphs.py` / `symbols.py` は全グリフが `combine()` 経由のため、
+**`removeOverlaps` は常に `False` のままにする**のが正しい。
+
+## セットアップ
+
+```bash
+pip install ufoLib2 ufo2ft fonttools skia-pathops
+```
+
+（`skia-pathops` は、複数の図形を重ねて1つのアウトラインに統合するブール演算に使用）
+
+## 実行方法
+
+```bash
+# 1. フォントを生成
+python build.py
+# → output/TRSans-Regular.ttf が生成される
+
+# 2. プレビュー画像を生成（生成したフォントを実際に読み込んで確認）
+python preview.py
+# → preview/preview.png が生成される
+```
+
+## GitHub Actionsでの自動ビルド
+
+`.github/workflows/build-font.yml` をリポジトリに含めてpushすると、
+`config.py` / `glyphs.py` / `symbols.py` などを変更してpushするたびに、
+GitHub Actions上で自動的に:
+
+1. 依存ライブラリのインストール
+2. `python build.py`（TTF生成）
+3. `python preview.py`（プレビュー画像生成）
+4. 生成物（TTF + プレビュー画像）をArtifactとしてアップロード
+
+まで実行される。GitHubリポジトリの「Actions」タブから手動実行（`workflow_dispatch`）も可能。
+
+## OSへのインストール方法
+
+- **macOS**: `output/TRSans-Regular.ttf` をダブルクリック → 「フォントをインストール」
+- **Windows**: `output/TRSans-Regular.ttf` を右クリック → 「インストール」
+- **Linux**: `~/.local/share/fonts/` にコピーして `fc-cache -f` を実行
+
+## 設計値を変える（config.py）
+
+例えば線幅を太くしたい場合:
+
+```python
+STROKE_WIDTH = 90  # 70 → 90 に変更
+```
+
+変更後 `python build.py` を再実行すれば、全62+17文字が新しい線幅で再生成されます。
+
+## 今後の改善案（優先度順）
+
+1. **曲線の質を上げる**: C/S/3/eなどの「開いた円」を、四角で断ち切る現在の方式から、
+   角度指定のアーク（部分円弧）で切り出す方式に変えると、開口部が自然な曲線になる。
+2. **CORNER_RADIUS の実装**: バーの端・交差部に小さな丸め処理を入れると
+   「わずかに角を丸める」というコンセプトに近づく。
+3. **カーニングペア**: 特に `AV` `To` `LT` のような組み合わせの詰め。
+4. **太さのバリエーション**: `STROKE_WIDTH` を変えた複数ウェイト(Light/Bold)の生成。
+5. **Greek/記号の拡充**: 残りのギリシャ文字・数学記号（∞ √ ∑ ≠ など）の追加。
+6. **ヒンティング**: 小サイズ表示の品質向上（`fontTools.ttLib.tables._h_i_n_t` 等）。
+7. **人間による字形レビュー**: 現状は数値検証（bbox・空グリフチェック）のみ。
+   実際にタイプデザイナーや目視での字形調整を挟むと品質が大きく上がる。
+
+## 既知の技術的な仕組み（参考）
+
+各文字は「足す図形（positives）」と「引く図形（negatives）」のリストとして定義し、
+[skia-pathops](https://github.com/fonttools/skia-pathops) でブール演算（合体→差分）した上で、
+[ufo2ft](https://github.com/googlefonts/ufo2ft) が3次ベジェをTrueType用の2次ベジェへ自動変換して
+TTFにコンパイルしています。図形の重なりや向き(時計回り/反時計回り)を手動で気にする必要がないため、
+「円から四角を引いてリングを作る」「バーを重ねて合体させる」といった直感的な組み方が可能です。
+
+
+---
+
 # TR Font Prototype Drawing Specification
 ## Truth-Science Font Prototype v0.1
 
