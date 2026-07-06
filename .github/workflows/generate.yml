@@ -1,10 +1,8 @@
-name: Generate TRSans
-
+name: Build glyphs
 on:
   workflow_dispatch:
   push:
-    paths: [ 'config.yaml', 'generate.py', 'fonts/**' ]
-
+    paths: [config.yaml, generate.py, fonts/**]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,5 +16,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add output
-          git commit -m "auto generate glyphs" || true
+          git commit -m "generate TRSans glyphs" || true
           git push
