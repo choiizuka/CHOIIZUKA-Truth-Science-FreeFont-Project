@@ -1442,7 +1442,7 @@ def build(font, cfg):
         '\\': ord('\\')
     }
     for sym, code in extra_symbols.items():
-        if code in font(code):
+        if code in font:
             continue
         creator = SYMBOL_CREATORS.get(sym)
         if creator:
@@ -1484,7 +1484,7 @@ def build(font, cfg):
                     _create_by_code(font, code, creator)
                     continue
             # last resort: create empty glyph with width
-            if not code in font(code):
+            if not code in font:
                 g = font.createChar(code)
                 g.width = GLYPH_WIDTH
 
@@ -1492,7 +1492,7 @@ def build(font, cfg):
     required_math = ['∞', '√', '∫', '∂', '∇', 'Σ', '∏', '≈', '≠', '≡', '≤', '≥', '±']
     for sym in required_math:
         code = ord(sym)
-        if not code in font(code):
+        if not code in font:
             creator = MATH_CREATORS.get(sym)
             if creator:
                 _create_by_code(font, code, creator)
