@@ -46,7 +46,3 @@ for cfg_path in BASE.glob("imagefonts/**/config.yaml"):
             y = (H - h) // 2 - bbox[1]
             draw.text((x, y), ch, font=font, fill=FG)
             img.save(out_dir / f"{f['prefix']}{ch}.png")
-
-
-
-print("done")
