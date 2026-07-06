@@ -50,7 +50,10 @@ PATTERNS = {
  'Χ':[0,1,1,0,1,1,1],'Ψ':[0,1,1,1,0,1,1],'Ω':[1,1,1,0,1],
 }
 
-TARGET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?.:,;-_/\\+=()[]{}"'\"@#$%&*ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ"
+TARGET = (
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?.:,;-_/\\+=()[]{}\"'@#$%&*"
+    "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ"
+)
 
 def build(font, cfg):
     for ch in TARGET:
