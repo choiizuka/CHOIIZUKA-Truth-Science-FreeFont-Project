@@ -5,8 +5,8 @@ foreground: "#000000"
 
 fonts:
     - name: TRSans
-    folder: TRSans # ← フォルダ名で管理
-    prefix: TRSans_ # ← ファイル名は固定
+    folder: TRSans
+    prefix: TRSans_
     ttf: fonts/DejaVuSans-Bold.ttf
     cap_height_ratio: 0.85
     x_height_ratio: 0.65
