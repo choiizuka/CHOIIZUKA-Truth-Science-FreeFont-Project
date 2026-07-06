@@ -1,0 +1,19 @@
+name: Font Factory
+on:
+  push:
+    paths: ['fonts/**', 'engine/**']
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: sudo apt-get update && sudo apt-get install -y fontforge python3-fontforge python3-yaml
+      - run: |
+          for d in fonts/*/; do
+            python3 engine/build_font.py "$d"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fonts
+          path: dist/
