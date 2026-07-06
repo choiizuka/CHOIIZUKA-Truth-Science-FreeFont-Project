@@ -441,6 +441,434 @@ Architecture Forever.
 
 ---
 
+# TR Font Prototype Drawing Specification
+## Truth-Science Font Prototype v0.1
+
+---
+
+# Purpose
+
+This document defines the drawing specifications for the prototype version of Truth-Science Font.
+
+This is **NOT** the final font architecture.
+
+The purpose of this prototype is to create a visually usable font as quickly as possible.
+
+The prototype exists to validate the design direction and development workflow.
+
+Perfect implementation is not required.
+
+---
+
+# Development Goal
+
+The highest priority is:
+
+> Generate an installable TrueType Font (TTF) using Python.
+
+The generated font should be suitable for testing inside
+
+- GitHub
+- WordPress
+- VSCode
+- OBS
+- Office
+- TRPRESS articles
+
+---
+
+# Development Policy
+
+Prototype First.
+
+Code quality is secondary.
+
+Architecture is secondary.
+
+Visual appearance is more important than implementation elegance.
+
+If multiple implementations are possible, always choose the simplest working solution.
+
+---
+
+# Character Set
+
+Prototype supports only the following characters.
+
+## Latin
+
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+abcdefghijklmnopqrstuvwxyz
+
+---
+
+## Numbers
+
+0123456789
+
+---
+
+## Symbols
+
+.
+
+,
+
+:
+
+;
+
+!
+
+?
+
+%
+
+#
+
+@
+
+&
+
++
+
+-
+
+=
+
+/
+
+\
+
+()
+
+[]
+
+{}
+
+<>
+
+"
+
+'
+
+_
+
+*
+
+^
+
+~
+
+---
+
+## Scientific Symbols
+
+∞
+
+√
+
+≈
+
+≤
+
+≥
+
+±
+
+×
+
+÷
+
+→
+
+←
+
+↑
+
+↓
+
+---
+
+## Greek Letters
+
+Σ
+
+Δ
+
+π
+
+λ
+
+μ
+
+Ω
+
+α
+
+β
+
+γ
+
+---
+
+# Font Style
+
+Category
+
+Sans Serif
+
+---
+
+Theme
+
+Scientific
+
+Mathematical
+
+Modern
+
+Elegant
+
+Readable
+
+---
+
+Avoid
+
+Overly futuristic
+
+Cyberpunk
+
+Decorative
+
+Calligraphy
+
+Comic style
+
+---
+
+# Design Rules
+
+Stroke width should remain visually consistent.
+
+Corners should be slightly rounded.
+
+Characters should have balanced proportions.
+
+Spacing should prioritize readability.
+
+The font should feel calm and precise.
+
+---
+
+# Geometry
+
+Use a simple coordinate system.
+
+Units Per Em
+
+1000
+
+Baseline
+
+0
+
+Cap Height
+
+700
+
+xHeight
+
+500
+
+Ascender
+
+800
+
+Descender
+
+-200
+
+These values may be adjusted during implementation.
+
+---
+
+# Drawing Method
+
+Glyphs may be created using
+
+- Lines
+- Bezier Curves
+- Circular Arcs
+- Rectangles
+- Polygons
+
+The implementation method is flexible.
+
+Visual quality is preferred over mathematical perfection.
+
+---
+
+# Prototype Philosophy
+
+Do not spend time optimizing every glyph.
+
+Instead,
+
+create all glyphs with consistent style.
+
+---
+
+# Code Structure
+
+A simple implementation is preferred.
+
+Example
+
+```
+build.py
+
+glyphs.py
+
+config.py
+
+preview.py
+```
+
+No complex architecture is required.
+
+---
+
+# Preview
+
+Generate
+
+preview.png
+
+containing
+
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+abcdefghijklmnopqrstuvwxyz
+
+0123456789
+
+Truth-Science
+
+TR Font
+
+GitHub
+
+Version 0.1
+
+Σ Δ π λ μ Ω
+
+---
+
+# Font Output
+
+Generate
+
+TRSans-Regular.ttf
+
+This font must be installable on
+
+Windows
+
+macOS
+
+Linux
+
+---
+
+# Build
+
+The project should be executable using
+
+```
+python build.py
+```
+
+The output font should be written into
+
+```
+output/
+
+TRSans-Regular.ttf
+```
+
+---
+
+# Validation
+
+The prototype is considered successful if
+
+✓ TTF generation succeeds
+
+✓ Font installs successfully
+
+✓ Characters display correctly
+
+✓ GitHub Actions can build it
+
+✓ WordPress can use it
+
+Perfect kerning and hinting are NOT required.
+
+---
+
+# AI Development Policy
+
+This prototype prioritizes speed over perfection.
+
+Future versions may completely replace the implementation.
+
+Please avoid unnecessary abstractions.
+
+The objective is to create a working prototype that demonstrates the Truth-Science Font concept.
+
+---
+
+# Future
+
+After the prototype is completed,
+
+the project will move toward a specification-driven font generation system.
+
+That future architecture is intentionally outside the scope of this document.
+
+Focus only on producing the best possible prototype.
+
+---
+
+# Mission
+
+Build something real.
+
+See it.
+
+Use it.
+
+Improve it.
+
+Prototype first.
+
+Architecture later.
+
+---
+
+This document intentionally prioritizes implementation speed over software architecture.
+
+The purpose of this prototype is to discover the optimal design through practical experimentation.
+
+Refactoring is expected after successful validation.
+
+（このドキュメントは意図的にソフトウェアアーキテクチャより実装速度を優先しています。本プロトタイプの目的は、実際に動くフォントを作りながら最適な設計を見つけることです。検証後のリファクタリングを前提としています。）
+
+===
+
 # Truth-Science Font Builder
 
 > **Python × FontForge × GitHub Actions**
@@ -671,6 +1099,23 @@ Everything should be generated from specifications and code whenever possible.
 **Truth-Science Font is not handcrafted glyph by glyph. It is a font family generated from design specifications, code, and open scientific principles.**
 
 （**Truth-Science Font は、一文字ずつ手作業で作るフォントではなく、設計仕様・コード・オープンな科学的原則から生成されるフォントファミリーです。**）
+
+---
+
+docs/
+
+00_Project_Overview.md
+01_Font_Design.md
+02_Drawing_Engine.md
+03_API.md
+04_Build_System.md
+
+10_License.md
+11_Open_Source.md
+12_Third_Party.md
+13_Development_Policy.md
+14_Quality_Assurance.md
+15_Release_Checklist.md
 
 ---
 
