@@ -1,0 +1,16 @@
+output_dir: output
+canvas: [200, 300]
+background: "#FFFFFF"
+foreground: "#000000"
+
+fonts:
+    - name: TRSans
+    folder: TRSans # ← フォルダ名で管理
+    prefix: TRSans_ # ← ファイル名は固定
+    ttf: fonts/DejaVuSans-Bold.ttf
+    cap_height_ratio: 0.85
+    x_height_ratio: 0.65
+    chars:
+            - "0-9"
+            - "E"
+            - "e"
